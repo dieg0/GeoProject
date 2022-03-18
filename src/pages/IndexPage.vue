@@ -1,6 +1,6 @@
 <template>
-  <q-page class="flex flex-center">
-    <geo-search title="Geo Search UK Zip Code"></geo-search>
+  <q-page>
+    <geo-search></geo-search>
   </q-page>
 </template>
 

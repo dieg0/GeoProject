@@ -1,18 +1,16 @@
 <template>
   <div>
-    <h3>{{ title }}</h3>
     <q-input
       outlined
       bottom-slots
       v-model="searchQuery"
       label="UK Postal Code"
       maxlength="12"
-      :dense="dense"
+      style="padding: 2em"
     >
       <template v-slot:before>
         <q-icon name="place" />
       </template>
-
       <template v-slot:append>
         <q-icon
           v-if="searchQuery !== ''"
@@ -27,6 +25,7 @@
         />
       </template>
     </q-input>
+    <leaflet-map :markers="markers"></leaflet-map>
   </div>
 </template>
 
@@ -34,13 +33,12 @@
 import { defineComponent, ref } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import LeafletMap from "./LeafletMap.vue";
 
 export default defineComponent({
   name: "GeoSearch",
-  props: {
-    title: String,
-  },
-  setup(props) {
+  components: { LeafletMap },
+  setup() {
     const searchQuery = ref("");
     const dense = false;
     const $q = useQuasar();
