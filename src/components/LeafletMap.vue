@@ -1,5 +1,7 @@
 <template>
-  <div id="geomap" style="height: 500px"></div>
+  <div>
+    <div id="geomap" style="height: 500px"></div>
+  </div>
 </template>
 
 <script>
@@ -39,8 +41,6 @@ export default defineComponent({
       const myIcon = leaflet.icon({
         iconUrl: "/icons/favicon-128x128.png",
         iconSize: [50, 50],
-        iconAnchor: [22, 94],
-        popupAnchor: [-3, -76],
       });
       props.markers.forEach((marker) => {
         leaflet
