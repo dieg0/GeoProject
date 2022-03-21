@@ -19,6 +19,7 @@ export default defineComponent({
   },
   setup(props) {
     let geomap;
+    const mapMarkers = [];
     onMounted(() => {
       geomap = leaflet.map("geomap").setView([51.505, -0.09], 10);
       leaflet
@@ -38,14 +39,27 @@ export default defineComponent({
         .addTo(geomap);
     });
     watchEffect(() => {
-      const myIcon = leaflet.icon({
+      mapMarkers.forEach((marker) => {
+        geomap.removeLayer(marker);
+      });
+      const existingMarkerIcon = leaflet.icon({
         iconUrl: "/icons/favicon-128x128.png",
         iconSize: [50, 50],
       });
+      const userMarkerIcon = leaflet.icon({
+        iconUrl: "/icons/favicon-128x128red.png",
+        iconSize: [50, 50],
+      });
       props.markers.forEach((marker) => {
-        leaflet
-          .marker([marker.lat, marker.lng], { icon: myIcon })
+        const mapMarker = leaflet
+          .marker([marker.lat, marker.lng], {
+            icon:
+              marker.markerType == "existing"
+                ? existingMarkerIcon
+                : userMarkerIcon,
+          })
           .addTo(geomap);
+        mapMarkers.push(mapMarker);
       });
     });
   },
